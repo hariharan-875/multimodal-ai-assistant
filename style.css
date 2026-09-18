@@ -789,6 +789,35 @@ body {
 
 
 /* =========================================================
+   DELETE CHAT BUTTON
+========================================================= */
+
+.delete-chat-btn {
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+    border: none;
+    border-radius: 7px;
+    background: transparent;
+    color: #9aa3b0;
+    font-size: 19px;
+    line-height: 1;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+
+.chat-history-item:hover .delete-chat-btn {
+    opacity: 1;
+}
+
+.delete-chat-btn:hover {
+    background: #ffe5e5;
+    color: #e54848;
+}
+
+
+/* =========================================================
    SEND BUTTON DISABLED
 ========================================================= */
 

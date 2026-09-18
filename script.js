@@ -1065,8 +1065,7 @@ function saveChat(
         type: type,
 
         fileName: file ?
-            file.name :
-            null,
+            file.name : null,
 
         time: new Date().toISOString()
 
@@ -1134,144 +1133,127 @@ function loadChatHistory() {
 // ============================================================
 
 function updateSidebar() {
-
-    if (!chatList) {
-
-        return;
-
-    }
-
+    if (!chatList) return;
 
     chatList.innerHTML = "";
 
-
-    if (
-        chatHistory.length === 0
-    ) {
-
+    if (chatHistory.length === 0) {
         chatList.innerHTML = `
             <div class="empty-chat">
-
-                <div class="empty-chat-icon">
-                    💬
-                </div>
-
-                <div>
-                    No chats yet.
-                </div>
-
-                <small>
-                    Start a new conversation!
-                </small>
-
+                <div class="empty-chat-icon">💬</div>
+                <div>No chats yet.</div>
+                <small>Start a new conversation!</small>
             </div>
         `;
-
         return;
-
     }
-
-
-    // Newest first
 
     const reversed = [...chatHistory].reverse();
 
+    reversed.forEach((chat) => {
 
-    reversed.forEach(
-        (chat) => {
+        const item = document.createElement("div");
 
-            const item =
-                document.createElement("div");
+        item.className = "chat-history-item";
 
-
-            item.className =
-                "chat-history-item";
-
-
-            item.style.cssText = `
-                cursor:pointer;
-                padding:10px 12px;
-                border-radius:10px;
-                margin-bottom:4px;
-            `;
-
-
-            const title =
-                chat.question.length > 32 ?
-                chat.question.substring(
-                    0,
-                    32
-                ) + "..." :
-                chat.question;
-
-
-            item.innerHTML = `
-                <div
-                    style="
-                        font-size:13px;
-                        font-weight:500;
-                        color:#354052;
-                        white-space:nowrap;
-                        overflow:hidden;
-                        text-overflow:ellipsis;
-                    "
-                >
-                    ${escapeHtml(title)}
+        item.innerHTML = `
+            <div class="chat-history-content">
+                <div class="chat-history-title">
+                    ${escapeHtml(
+                        chat.question.length > 32
+                            ? chat.question.substring(0, 32) + "..."
+                            : chat.question
+                    )}
                 </div>
 
-                <div
-                    style="
-                        font-size:10px;
-                        color:#9aa3b0;
-                        margin-top:4px;
-                    "
-                >
-                    ${chat.type}
+                <div class="chat-history-type">
+                    ${escapeHtml(chat.type)}
                 </div>
-            `;
+            </div>
 
+            <button
+                class="delete-history-btn"
+                title="Delete"
+                type="button"
+            >
+                🗑
+            </button>
+        `;
 
-            item.addEventListener(
-                "mouseenter",
-                () => {
+        // Open chat
+        item.querySelector(".chat-history-content")
+            .addEventListener("click", () => {
+                loadChat(chat);
+            });
 
-                    item.style.background =
-                        "#eef0f3";
+        // Delete chat
+        item.querySelector(".delete-history-btn")
+            .addEventListener("click", (event) => {
+                event.stopPropagation();
 
-                }
-            );
+                deleteChat(chat.id);
+            });
 
-
-            item.addEventListener(
-                "mouseleave",
-                () => {
-
-                    item.style.background =
-                        "transparent";
-
-                }
-            );
-
-
-            item.addEventListener(
-                "click",
-                () => {
-
-                    loadChat(chat);
-
-                }
-            );
-
-
-            chatList.appendChild(
-                item
-            );
-
-        }
-    );
-
+        chatList.appendChild(item);
+    });
 }
 
+
+// ============================================================
+// DELETE SINGLE HISTORY
+// ============================================================
+
+function deleteChat(chatId) {
+
+    chatHistory = chatHistory.filter(
+        chat => chat.id !== chatId
+    );
+
+    localStorage.setItem(
+        "multimodal_chat_history",
+        JSON.stringify(chatHistory)
+    );
+
+    updateSidebar();
+
+    newChat();
+}
+
+
+// ============================================================
+// DELETE SINGLE CHAT
+// ============================================================
+
+function deleteChat(chatId) {
+
+    const confirmed =
+        confirm("Delete this chat?");
+
+    if (!confirmed) {
+        return;
+    }
+
+
+    chatHistory =
+        chatHistory.filter(
+            chat => chat.id !== chatId
+        );
+
+
+    localStorage.setItem(
+        "multimodal_chat_history",
+        JSON.stringify(chatHistory)
+    );
+
+
+    updateSidebar();
+
+
+    // Clear current screen
+
+    newChat();
+
+}
 
 // ============================================================
 // LOAD OLD CHAT
