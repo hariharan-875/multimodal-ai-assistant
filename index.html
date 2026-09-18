@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Multimodal AI</title>
+
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar" id="sidebar">
+
+        <div class="sidebar-header">
+
+            <div class="brand">
+
+                <div class="brand-orb"></div>
+
+                <span>Multimodal AI</span>
+
+            </div>
+
+            <button class="close-sidebar" onclick="toggleSidebar()">
+                ×
+            </button>
+
+        </div>
+
+
+        <button class="new-chat-btn" onclick="newChat()">
+            <span class="plus-icon">＋</span>
+            <span>New Chat</span>
+        </button>
+
+
+        <div class="sidebar-section">
+
+            <div class="section-title">
+                <span>💬</span> Chats
+            </div>
+
+            <div class="chat-list" id="chatList">
+
+                <div class="empty-chat">
+
+                    <div class="empty-chat-icon">
+                        💬
+                    </div>
+
+                    <div>
+                        No chats yet.
+                    </div>
+
+                    <small>
+                        Start a new conversation!
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="sidebar-footer">
+
+            <strong>
+                Multimodal AI
+            </strong>
+
+            <span>
+                Text • Image • PDF • Audio
+            </span>
+
+            <small>
+                Your intelligent workspace.
+            </small>
+
+        </div>
+
+    </aside>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="main-content">
+
+        <!-- TOP BAR -->
+
+        <header class="topbar">
+
+            <button class="menu-btn" onclick="toggleSidebar()">
+                ☰
+            </button>
+
+            <span>
+                Multimodal AI
+            </span>
+
+        </header>
+
+
+        <!-- ================= CHAT ================= -->
+
+        <section class="chat-container" id="chatContainer">
+
+
+            <!-- WELCOME -->
+
+            <div class="welcome-screen" id="welcomeScreen">
+
+                <div class="main-orb"></div>
+
+
+                <h1>
+                    What can I help with?
+                </h1>
+
+
+                <p>
+                    Ask questions, analyze images, understand PDFs or process audio.
+                </p>
+
+
+                <!-- FEATURE CARDS -->
+
+                <div class="feature-cards">
+
+
+                    <!-- TEXT -->
+
+                    <div class="feature-card">
+
+                        <div class="feature-icon text-icon">
+                            ✎
+                        </div>
+
+                        <h3>
+                            Text
+                        </h3>
+
+                        <p>
+                            Ask questions and generate content.
+                        </p>
+
+                    </div>
+
+
+                    <!-- IMAGE -->
+
+                    <div class="feature-card">
+
+                        <div class="feature-icon image-icon">
+                            ▧
+                        </div>
+
+                        <h3>
+                            Image
+                        </h3>
+
+                        <p>
+                            Analyze and understand images.
+                        </p>
+
+                    </div>
+
+
+                    <!-- PDF -->
+
+                    <div class="feature-card">
+
+                        <div class="feature-icon pdf-icon">
+                            ▤
+                        </div>
+
+                        <h3>
+                            PDF
+                        </h3>
+
+                        <p>
+                            Ask questions about documents.
+                        </p>
+
+                    </div>
+
+
+                    <!-- AUDIO -->
+
+                    <div class="feature-card">
+
+                        <div class="feature-icon audio-icon">
+                            〽
+                        </div>
+
+                        <h3>
+                            Audio
+                        </h3>
+
+                        <p>
+                            Process and understand audio.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- MESSAGES -->
+
+            <div class="messages" id="messages"></div>
+
+        </section>
+
+
+        <!-- ================= INPUT ================= -->
+
+        <section class="input-section">
+
+
+            <!-- FILE PREVIEW -->
+
+            <div class="file-preview" id="filePreview"></div>
+
+
+            <div class="input-box">
+
+
+                <!-- TEXT -->
+
+                <div class="input-top">
+
+                    <textarea id="promptInput" placeholder="Message Multimodal AI..." rows="1" oninput="autoResize(this)"></textarea>
+
+                </div>
+
+
+                <!-- CONTROLS -->
+
+                <div class="input-bottom">
+
+
+                    <!-- ATTACH -->
+
+                    <label for="fileInput" class="attach-btn" title="Attach file">
+                        📎
+                    </label>
+
+
+                    <input type="file" id="fileInput" hidden onchange="handleFile(this)">
+
+
+                    <!-- TYPE -->
+
+                    <select id="inputType" onchange="changeInputType()">
+
+                        <option value="text">
+                            ▤ Text
+                        </option>
+
+                        <option value="image">
+                            ▧ Image
+                        </option>
+
+                        <option value="pdf">
+                            ▤ PDF
+                        </option>
+
+                        <option value="audio">
+                            〽 Audio
+                        </option>
+
+                    </select>
+
+
+                    <div class="input-spacer"></div>
+
+
+                    <!-- SEND -->
+
+                    <button class="send-btn" id="sendButton" onclick="sendMessage()" title="Send">
+                        ➤
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="input-info">
+
+                Multimodal AI can make mistakes. Check important information.
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <script src="/script.js"></script>
+
+</body>
+
+</html>
